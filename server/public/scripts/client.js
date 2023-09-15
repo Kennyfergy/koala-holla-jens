@@ -1,3 +1,4 @@
+
 console.log("js");
 
 $(document).ready(function () {
@@ -6,6 +7,7 @@ $(document).ready(function () {
   setupClickListeners();
   // load existing koalas on page load
   getKoalas();
+
   $("#viewKoalas").on("click", ".transferBtn", changeTransferStatus);
   $("#viewKoalas").on("click", ".deleteBtn", deleteKoala);
 }); 
@@ -19,6 +21,7 @@ function setupClickListeners() {
       gender: $("#genderIn").val(),
       ready_for_transfer: $("#readyForTransferIn").val(),
       notes: $("#notesIn").val(),
+
     };
 
     // call saveKoala with the new object
@@ -53,7 +56,9 @@ function appendDom(koalas) {
   <td>${koala.age}</td>
   <td>${koala.gender}</td>
 
+
   <td>${transferStatus}</td>
+
   <td>${koala.notes}</td>
   <td>
   <button class="transferBtn" data-id=${koala.id}> Mark Ready for Transfer</button>
@@ -97,6 +102,7 @@ function changeTransferStatus(event) {
       .catch((err) => console.log("Error in PUT", err));
 }
 
+
 const deleteKoala = (event) => {
   const id = $(event.target).data("id");
 
@@ -109,3 +115,4 @@ const deleteKoala = (event) => {
     })
     .catch((err) => console.log(err));
 };
+
