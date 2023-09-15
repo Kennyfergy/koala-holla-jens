@@ -10,7 +10,7 @@ $( document ).ready( function(){
 }); // end doc ready
 
 function setupClickListeners() {
-  $( '#addButton' ).on( 'click', function(){
+  $( '#addButton' ).on( 'click', addKoala );{
     console.log( 'in addButton on click' );
     // get user input and put in an object
     // NOT WORKING YET :(
@@ -24,7 +24,7 @@ function setupClickListeners() {
     };
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
-  }); 
+  }; 
 }
 
 function getKoalas(){
