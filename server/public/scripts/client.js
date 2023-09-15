@@ -1,3 +1,5 @@
+const { put } = require("../../routes/koala.router");
+
 console.log("js");
 
 $(document).ready(function () {
@@ -6,6 +8,7 @@ $(document).ready(function () {
   setupClickListeners();
   // load existing koalas on page load
   getKoalas();
+  $("#viewKoalas"), on("click", ".transferBtn", changeTransferStatus); //this is a function to change the transfer status
 }); // end doc ready
 
 function setupClickListeners() {
@@ -22,7 +25,7 @@ function setupClickListeners() {
       notes: "testName",
     };
     // call saveKoala with the new object
-    saveKoala(koalaToSend);
+    saveKoala(koalaToSend); // this will be changed to our new post ajax function
   });
 }
 
@@ -37,7 +40,7 @@ function getKoalas() {
       console.log(response);
       appendDom(response);
     })
-    .catch((err) => console.log("Erroor in GET", err));
+    .catch((err) => console.log("Error in GET", err));
 } // end getKoalas
 
 function appendDom(koalas) {
@@ -45,7 +48,7 @@ function appendDom(koalas) {
 
   for (let i = 0; i < koalas.length; i++) {
     const koala = koalas[i];
-    let transferStatus = koala.readyForTransfer ? "Ready" : "Not Ready";
+    //let transferStatus = koala.readyForTransfer ? "Ready" : "Not Ready";
 
     $("#viewKoalas").append(`
   <tr>
@@ -53,7 +56,7 @@ function appendDom(koalas) {
   <td>${koala.age}</td>
   <td>${koala.gender}</td>
   <td>${koala.notes}</td>
-  <td>${transferStatus}</td>
+  <td>${koala.readyForTransfer}</td>
   <td>
   <button class="transferBtn" data-id=${koalas[i].id}> Mark Ready for Transfer</button>
   </td>
@@ -66,3 +69,16 @@ function saveKoala(newKoala) {
   console.log("in saveKoala", newKoala);
   // ajax call to server to get koalas
 }
+
+const changeTransferStatus = (event) => {
+  const id = $(event.target).data("id");
+  $.ajax({
+    method: PUT,
+    url: `/koalas${id}`,
+    data: {
+      readyForTransfer: true,
+    },
+  })
+    .then(() => getKoalas())
+    .catch((err) => console.log(err));
+}; //end changeTransferStatus
