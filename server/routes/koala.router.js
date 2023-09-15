@@ -1,5 +1,4 @@
 const express = require("express");
-const koalaRouter = express.Router();
 const router = express.Router();
 // DB CONNECTION
 const pool = require("../modules/pool");
@@ -10,9 +9,8 @@ const pool = require("../modules/pool");
 router.post("/", (req, res) => {
     let newKoala = req.body;
     console.log ("in POST", newKoala);
-    let queryText = `INSERT INTO "profile" ("name", "gender", "age", "ready_to_transfer", 
-    "notes") VALUES ($1, $2, $3, $4);`;
-    pool.query(queryText, [newKoala.name, newKoala.gender, newKoala.age, newKoala.readyForTransfer, newKoala.notes])
+    let queryText = `INSERT INTO "profile" ("name", "gender", "age", "ready_for_transfer", "notes") VALUES ($1, $2, $3, $4, $5);`;
+    pool.query(queryText, [newKoala.name, newKoala.gender, newKoala.age, newKoala.readyToTransfer, newKoala.notes])
     .then((result) => {
         res.sendStatus(201);
         console.log("in POST", result);
@@ -27,4 +25,4 @@ router.post("/", (req, res) => {
 
 // DELETE
 
-module.exports = koalaRouter;
+module.exports = router;
