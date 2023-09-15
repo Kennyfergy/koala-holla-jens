@@ -1,4 +1,4 @@
-const { put } = require("../../routes/koala.router");
+
 
 console.log("js");
 
@@ -8,14 +8,13 @@ $(document).ready(function () {
   setupClickListeners();
   // load existing koalas on page load
   getKoalas();
-  $("#viewKoalas"), on("click", ".transferBtn", changeTransferStatus); //this is a function to change the transfer status
+  $("#viewKoalas").on("click", ".transferBtn", changeTransferStatus); //this is a function to change the transfer status
 }); // end doc ready
 
 function setupClickListeners() {
+  $('#addButton').on('click', function () {
+    console.log('in addButton on click');
 
-  $( '#addButton' ).on( 'click', addKoala );{
-    console.log( 'in addButton on click' );
- 
     // get user input and put in an object
     // NOT WORKING YET :(
     // using a test object
@@ -23,15 +22,13 @@ function setupClickListeners() {
       name: "testName",
       age: "testName",
       gender: "testName",
-      readyForTransfer: "testName",
+      ready_for_transfer: "testName",
       notes: "testName",
     };
-
 
     // call saveKoala with the new object
     saveKoala(koalaToSend); // this will be changed to our new post ajax function
   });
-
 }
 
 function getKoalas() {
@@ -60,8 +57,8 @@ function appendDom(koalas) {
   <td>${koala.name}</td>
   <td>${koala.age}</td>
   <td>${koala.gender}</td>
-  <td>${koala.notes}</td>
   <td>${koala.readyForTransfer}</td>
+  <td>${koala.notes}</td>
   <td>
   <button class="transferBtn" data-id=${koalas[i].id}> Mark Ready for Transfer</button>
   </td>
@@ -73,4 +70,17 @@ function appendDom(koalas) {
 function saveKoala(newKoala) {
   console.log("in saveKoala", newKoala);
   // ajax call to server to get koalas
+}
+
+function addKoala(newkoala) {
+  $.ajax({
+    type: "POST",
+    url: "/koalas",
+    data: newkoala
+  }).then(function (response) {
+    console.log(response);
+    getKoalas();
+  }).catch(function(error) {
+    console.log (error in postMessage, error);
+  })
 }
