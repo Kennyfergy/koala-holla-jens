@@ -12,8 +12,10 @@ $(document).ready(function () {
 }); // end doc ready
 
 function setupClickListeners() {
-  $("#addButton").on("click", function () {
-    console.log("in addButton on click");
+
+  $( '#addButton' ).on( 'click', addKoala );{
+    console.log( 'in addButton on click' );
+ 
     // get user input and put in an object
     // NOT WORKING YET :(
     // using a test object
@@ -24,9 +26,12 @@ function setupClickListeners() {
       readyForTransfer: "testName",
       notes: "testName",
     };
+
+
     // call saveKoala with the new object
     saveKoala(koalaToSend); // this will be changed to our new post ajax function
   });
+
 }
 
 function getKoalas() {
