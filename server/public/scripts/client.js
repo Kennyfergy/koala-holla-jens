@@ -56,7 +56,7 @@ function appendDom(koalas) {
   <td>${transferStatus}</td>
   <td>${koala.notes}</td>
   <td>
-  <button class="transferBtn" data-id=${koala.id}> Mark Ready for Transfer</button>
+  ${transferStatus ? "Marked for Transfer" : `<button class="transferBtn" data-id=${koala.id}> Mark Ready for Transfer</button>`}
   </td>
   <td>
   <button class="deleteBtn" data-id=${koalas[i].id}>Delete</button>
