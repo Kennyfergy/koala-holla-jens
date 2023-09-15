@@ -28,8 +28,10 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
     let newKoala = req.body;
     console.log ("in POST", newKoala);
-    let queryText = `INSERT INTO "profile" ("name", "gender", "age", "ready_for_transfer", "notes") VALUES ($1, $2, $3, $4, $5);`;
-    pool.query(queryText, [newKoala.name, newKoala.gender, newKoala.age, newKoala.ready_for_transfer, newKoala.notes])
+
+    let queryText = `INSERT INTO "profile" ("name", "gender", "age", "notes") VALUES ($1, $2, $3, $4);`;
+    pool.query(queryText, [newKoala.name, newKoala.gender, newKoala.age, newKoala.notes])
+
     .then((result) => {
         res.sendStatus(201);
         console.log("in POST", result);
@@ -43,17 +45,31 @@ router.post("/", (req, res) => {
 // PUT
 router.put("/:id", (req, res) => {
     const id = req.params.id;
-    const ready_to_transfer = req.body.ready_to_transfer;
+    const ready_for_transfer = req.body.ready_to_transfer;
     
-    const queryText = `UPDATE "profile" SET "ready_to_transfer" = $1 WHERE "id" = $2;`;
-  
-    pool.query(queryText, [ready_to_transfer, id])
+    const queryText = `UPDATE "profile" SET "ready_for_transfer" = true WHERE "id" = $1;`;
+    pool.query(queryText, [id])
       .then(() => res.sendStatus(204))
       .catch((err) => {
         console.log("Error in UPDATING profile table", err);
         res.sendStatus(500);
       });
   });
-// DELETE
 
+
+// DELETE
+router.delete("/:id", (req, res) => {
+    const id = req.params.id;
+    console.log(`DELETE route in /profile/ with id of`, id);
+    const queryText = `DELETE FROM "profile" WHERE "id" = $1;`;
+  
+    pool
+      .query(queryText, [id])
+      .then(() => res.sendStatus(204)) //204 no content
+      .catch((err) => {
+        console.log("Error in DELETING from profile table", err);
+        res.sendStatus(500);
+      });
+  });
 module.exports = router;
+
