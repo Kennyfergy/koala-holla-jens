@@ -69,16 +69,3 @@ function saveKoala(newKoala) {
   console.log("in saveKoala", newKoala);
   // ajax call to server to get koalas
 }
-
-const changeTransferStatus = (event) => {
-  const id = $(event.target).data("id");
-  $.ajax({
-    method: PUT,
-    url: `/koalas${id}`,
-    data: {
-      readyForTransfer: true,
-    },
-  })
-    .then(() => getKoalas())
-    .catch((err) => console.log(err));
-}; //end changeTransferStatus
